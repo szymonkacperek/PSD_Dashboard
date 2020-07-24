@@ -16,7 +16,6 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
@@ -25,10 +24,10 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h ../Inc/can.h \
- ../Inc/main.h ../Inc/i2c.h ../Inc/spi.h ../Inc/tim.h ../Inc/usart.h \
- ../Inc/gpio.h ../Src/../GUI/gui.h ../Src/../GUI/gui.c \
- ../Src/../GUI/../GUI/gui.h ../Src/../GUI/../GUI/gui_data.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h ../Inc/i2c.h \
+ ../Inc/main.h ../Inc/spi.h ../Inc/tim.h ../Inc/usart.h ../Inc/gpio.h \
+ ../Src/../GUI/gui.h ../Src/../GUI/gui.c ../Src/../GUI/../GUI/gui.h \
+ ../Src/../GUI/../GUI/gui_data.h \
  ../Src/../GUI/../Drivers/u8glib/inc/u8g.h \
  ../Src/../GUI/../Drivers/u8glib/inc/u8g_arm.h \
  ../Src/../GUI/../Drivers/u8glib/inc/u8g.h \
@@ -78,8 +77,6 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h:
 
-../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h:
-
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
@@ -98,11 +95,9 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
-../Inc/can.h:
+../Inc/i2c.h:
 
 ../Inc/main.h:
-
-../Inc/i2c.h:
 
 ../Inc/spi.h:
 

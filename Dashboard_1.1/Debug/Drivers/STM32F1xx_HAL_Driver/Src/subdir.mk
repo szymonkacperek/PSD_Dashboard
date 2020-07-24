@@ -5,7 +5,6 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c \
-../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.c \
 ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c \
 ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c \
 ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c \
@@ -24,7 +23,6 @@ C_SRCS += \
 
 OBJS += \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o \
-./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.o \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.o \
@@ -43,7 +41,6 @@ OBJS += \
 
 C_DEPS += \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.d \
-./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.d \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.d \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.d \
 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.d \
@@ -64,8 +61,6 @@ C_DEPS += \
 # Each subdirectory must supply rules for building sources it contributes
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
 	arm-none-eabi-gcc -fdata-sections "$<" -mcpu=cortex-m3 -std=gnu11 -g3 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xE -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -Og -ffunction-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.o: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.c
-	arm-none-eabi-gcc -fdata-sections "$<" -mcpu=cortex-m3 -std=gnu11 -g3 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xE -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -Og -ffunction-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
 	arm-none-eabi-gcc -fdata-sections "$<" -mcpu=cortex-m3 -std=gnu11 -g3 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xE -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -Og -ffunction-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o: ../Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c
