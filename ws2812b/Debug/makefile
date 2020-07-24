@@ -26,9 +26,6 @@ endif
 ifneq ($(strip $(CXX_DEPS)),)
 -include $(CXX_DEPS)
 endif
-ifneq ($(strip $(S_UPPER_DEPS)),)
--include $(S_UPPER_DEPS)
-endif
 ifneq ($(strip $(C_DEPS)),)
 -include $(C_DEPS)
 endif
@@ -40,31 +37,51 @@ endif
 -include ../makefile.defs
 
 # Add inputs and outputs from these tool invocations to the build variables 
+EXECUTABLES += \
+ws2812b.elf \
+
+SIZE_OUTPUT += \
+default.size.stdout \
+
+OBJDUMP_LIST += \
+ws2812b.list \
+
+OBJCOPY_BIN += \
+ws2812b.bin \
+
 
 # All Target
-all: ws2812b.elf
+all: ws2812b.elf secondary-outputs
 
 # Tool invocations
-ws2812b.elf: $(OBJS) $(USER_OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: MCU G++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -T"D:/REPOZYTORIA_GIT/PUT SOLAR/DASHBOARD/PSD_DASHBOARD/ws2812b/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -fno-exceptions -fno-rtti -o "ws2812b.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+ws2812b.elf: $(OBJS) $(USER_OBJS) /home/szymon/Documents/Workspace/PUT-SD_Dashboard/ws2812b/LinkerScript.ld
+	arm-none-eabi-g++ -o "ws2812b.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"/home/szymon/Documents/Workspace/PUT-SD_Dashboard/ws2812b/LinkerScript.ld" --specs=nosys.specs -Wl,-Map="ws2812b.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
-	$(MAKE) --no-print-directory post-build
+
+default.size.stdout: $(EXECUTABLES)
+	arm-none-eabi-size  $(EXECUTABLES)
+	@echo 'Finished building: $@'
+	@echo ' '
+
+ws2812b.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "ws2812b.list"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+ws2812b.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "ws2812b.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) *
 	-@echo ' '
 
-post-build:
-	-@echo 'Generating binary and Printing size information:'
-	arm-none-eabi-objcopy -O binary "ws2812b.elf" "ws2812b.bin"
-	arm-none-eabi-size "ws2812b.elf"
-	-@echo ' '
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 .PHONY: all clean dependents
-.SECONDARY: post-build
+.SECONDARY:
 
 -include ../makefile.targets
