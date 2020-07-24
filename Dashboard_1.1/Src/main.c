@@ -91,9 +91,35 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
- HAL_DBGMCU_EnableDBGSleepMode();
- HAL_DBGMCU_DisableDBGStopMode();
- HAL_DBGMCU_EnableDBGStandbyMode();
+sFilterConfig.FilterMode=CAN_FILTERMODE_IDMASK;
+sFilterConfig.FilterScale=CAN_FILTERSCALE_32BIT;
+sFilterConfig.FilterIdHigh=0x0000;
+sFilterConfig.FilterIdLow=0x0000;
+sFilterConfig.FilterMaskIdHigh=0x0000;
+sFilterConfig.FilterMaskIdLow=0x0000;
+sFilterConfig.FilterFIFOAssignment=CAN_FILTER_FIFO0;
+sFilterConfig.FilterActivation=ENABLE;
+sFilterConfig.BankNumber=0;
+
+HAL_CAN_ConfigFilter(&hcan,&sFilterConfig);
+
+
+
+TxHeader.StdId=0x321;
+TxHeader.RTR=CAN_RTR_DATA;
+TxHeader.IDE=CAN_ID_STD;
+TxHeader.DLC=8;
+TxHeader.Data[0]=0x09;
+TxHeader.Data[1]=0x10;
+TxHeader.Data[2]=0x2A;
+TxHeader.Data[3]=0x3B;
+TxHeader.Data[4]=0x4C;
+TxHeader.Data[5]=0x5D;
+TxHeader.Data[6]=0x6E;
+TxHeader.Data[7]=0x7F;
+
+HAL_CAN_Receive_IT(&hcan,CAN_FIFO0);
+
 
   /* USER CODE END 1 */
 
@@ -126,39 +152,10 @@ int main(void)
 
   gui_init();
 
- //gui_screen_intro(); //test
-  //HAL_Delay(100);
-
-  sFilterConfig.FilterNumber=0;
-  sFilterConfig.FilterMode=CAN_FILTERMODE_IDMASK;
-  sFilterConfig.FilterScale=CAN_FILTERSCALE_32BIT;
-  sFilterConfig.FilterIdHigh=0x0000;
-  sFilterConfig.FilterIdLow=0x0000;
-  sFilterConfig.FilterMaskIdHigh=0x0000;
-  sFilterConfig.FilterMaskIdLow=0x0000;
-  sFilterConfig.FilterFIFOAssignment=0;
-  sFilterConfig.FilterActivation=ENABLE;
-  sFilterConfig.BankNumber=0;
-
-  HAL_CAN_ConfigFilter(&hcan,&sFilterConfig);
+ gui_screen_intro(); //test
+  HAL_Delay(100);
 
 
-
-  TxHeader.StdId=0x127;
-  TxHeader.RTR=CAN_RTR_DATA;
-  TxHeader.IDE=CAN_ID_STD;
-  TxHeader.DLC=8;
-  TxHeader.Data[0]=1;
-  TxHeader.Data[1]=2;
-  TxHeader.Data[2]=3;
-  TxHeader.Data[3]=4;
-  TxHeader.Data[4]=5;
-  TxHeader.Data[5]=6;
-  TxHeader.Data[6]=7;
-  TxHeader.Data[7]=8;
-
-  HAL_CAN_Receive_IT(&hcan,CAN_FIFO0);
-  HAL_CAN_Transmit(&hcan,10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -169,10 +166,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  //HAL_Delay(500);
 	  gui_screen_main();
-	  //TxHeader.Data[0]++;
 
+	  HAL_Delay(500);
+	  TxHeader.Data[0]++;
+	  HAL_CAN_Transmit(&hcan,10);
 
   }
   /* USER CODE END 3 */

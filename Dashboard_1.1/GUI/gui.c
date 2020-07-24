@@ -48,123 +48,12 @@ void gui_set_brightness(uint8_t x)
 void gui_screen_main()
 {
 
-	////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////debug/////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////
-
-	//Kod ponizej w petli zmienia wartosci zmiennych na wyswietlaczu ( w celu pokazowym)
-	//ostatecznie nalezy wykomendowac wszystko az do nastepnego znacznika debug
-
-
-	TEST_counter++;
-
-	TEST_counter2++;
-	if(TEST_counter2 > 3)
-	{
-		TEST_counter2 = 0;
-		gui_battery=gui_battery-0.5;
-	}
-
-	if(gui_battery < 1)
-	{
-		gui_battery = 100;
-
-		TEST_flag = 0;
-
-	}
-
-
-	TEST_counter3++;
-	if(TEST_counter3 >2)
-	{
-		TEST_counter3=0;
-
-		if(TEST_flag==0)
-		{
-			gui_speed++;
-		}
-		else
-		{
-			gui_speed--;
-		}
-
-	}
-
-	if(gui_speed > 140)
-	{
-		TEST_flag=1;
-		//gui_speed = 0;
-	}
-
-	if(gui_speed < 1)
-	{
-		TEST_flag=0;
-	}
+	////////////////////////////////////////////////////////////////////////////////debug
 
 
 
+	////////////////////////////////////////////////////////////////////////////////debug
 
-	gui_charging = 0;
-
-
-
-
-
-	if(TEST_flag == 0 && gui_power != 12)
-	{
-		TEST_counter2++;
-		if(TEST_counter2 > 3)
-		{
-			TEST_counter2 = 0;
-			gui_power=gui_power+0.2;
-		}
-
-		if(gui_power > 12)
-		{
-			gui_power = 12;
-		}
-
-	}
-
-
-	if(TEST_flag == 1)
-	{
-		TEST_counter2++;
-		if(TEST_counter2 > 3)
-		{
-			TEST_counter2 = 0;
-			gui_power=gui_power-0.3;
-			if(gui_power<0)
-			{
-				gui_power=0;
-			}
-		}
-	}
-
-	TEST_counter4++;
-	if(TEST_counter4 > 20)
-	{
-		TEST_counter4 = 0;
-
-		if(TEST_poprz_stan == 0)
-		{
-			gui_leds_byte1 = 0b11000101;
-			gui_leds_byte2 = 0b00100001;
-			TEST_poprz_stan = 1;
-		}
-		else
-		{
-			gui_leds_byte1 =0b01000101;
-			gui_leds_byte2 = 0b01100000;
-			TEST_poprz_stan = 0;
-		}
-
-	}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////koniec debug/////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
 
 	gui_picture_iteration++;
 
