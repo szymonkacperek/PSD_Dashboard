@@ -88,7 +88,6 @@ int main(void)
 // HAL_DBGMCU_EnableDBGStandbyMode();
 
   /* USER CODE END 1 */
-  
 
   /* MCU Configuration--------------------------------------------------------*/
 
