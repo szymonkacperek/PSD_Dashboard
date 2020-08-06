@@ -42,3 +42,10 @@
 
 # Libraries
 /lib
+
+# TeX files
+*.synctex.gz
+*.toc
+*.out
+*.log
+*.aux
