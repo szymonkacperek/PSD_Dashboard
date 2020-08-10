@@ -81,35 +81,29 @@ void display_gear(int state) //USE OLED #2 (CENTER) to display gear setting (R N
 	}
 }
 
-
-void display_power_disable(void)
-{
+void display_power_disable(void) {
 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, 10); //USTAW ADRES
 	u8g_FirstPage(&u8g_small);
-		do
-		{
-			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
-		} while ( u8g_NextPage(&u8g_small) );
+	do {
+		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+	} while (u8g_NextPage(&u8g_small));
 }
 
-void display_battery_disable(void)
-{
+void display_battery_disable(void) {
 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, 10); //USTAW ADRES
 	u8g_FirstPage(&u8g_small);
-		do
-		{
-			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
-		} while ( u8g_NextPage(&u8g_small) );
+	do {
+		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+	} while (u8g_NextPage(&u8g_small));
 
 }
-void display_gear_disable(void)
-{
+
+void display_gear_disable(void) {
 	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 10, 10, 0, 0, 10); //USTAW ADRES
 	u8g_FirstPage(&u8g_small);
-		do
-		{
-			u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
-		} while ( u8g_NextPage(&u8g_small) );
+	do {
+		u8g_DrawBitmap(&u8g_small, 0, 0, 16, 64, blank_small);
+	} while (u8g_NextPage(&u8g_small));
 
 }
 
@@ -203,48 +197,49 @@ void display_speed(double value, uint8_t cruise)
 
 }
 
-void displays_init(void)
-{
+// Inicjalizacja trzech malych wyswietlaczy
+//  Nie mam jeszcze pojecia dlaczego sa ustawiane te piny na poczatku. Wysyl danych po I2C
+// rozni sie zdecydowanie parametrem Internal Memory Address. Moze wlasnie w ten sposob
+// sa rozdzielane te sygnaly I2C, dzieki ktorym jednym interfejsem obslugujesz trzy wyswietlacze.
+//  Do rozdzielenia sygnalu sluzy uklad TCA9548A. Jest tam kilka kanalow i byc moze parametr trzeci
+// z funkcji wlasnie wybiera kanal.
+//  Wyglada na to, ze te komendy po prostu aktywuja te wyswietlacze. Ustawienie pinow moze po prostu
+// puszczac na nie napiecie.
+void displays_init(void) {
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET); // MUSI BYC
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, GPIO_PIN_SET); // (reset i2c)
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET); // MUSI BYC mux+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET); // MUSI BYC mux
 
+	u8g_InitComFn(&u8g_big, &u8g_dev_ssd1309_128x64_hw_spi, u8g_com_hw_spi_fn);
+	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+	HAL_Delay(5);
 
+	u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c,
+			u8g_com_hw_i2c_fn); //here we init our u8glib driver
+	u8g_small.font = u8g_font_fub30r;
+	HAL_Delay(5);
+	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 2, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+	HAL_Delay(5);
 
+	u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c,
+			u8g_com_hw_i2c_fn); //here we init our u8glib driver
+	u8g_small.font = u8g_font_fub30r;
+	HAL_Delay(5);
+	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
+	HAL_Delay(5);
 
-	  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);// MUSI BYC
-
-	  HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12,GPIO_PIN_SET); // (reset i2c)
-
-
-	  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET); // MUSI BYC mux+
-	  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_9,GPIO_PIN_RESET); // MUSI BYC mux
-
-	  	u8g_InitComFn(&u8g_big, &u8g_dev_ssd1309_128x64_hw_spi, u8g_com_hw_spi_fn);
-
-
-		HAL_I2C_Mem_Write(&hi2c1, 0xE0, 1, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
-		HAL_Delay(5);
-		u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init our u8glib driver
-		u8g_small.font = u8g_font_fub30r;
-		HAL_Delay(5);
-		HAL_I2C_Mem_Write(&hi2c1, 0xE0, 2, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
-		HAL_Delay(5);
-		u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init our u8glib driver
-		u8g_small.font = u8g_font_fub30r;
-		HAL_Delay(5);
-	  	HAL_I2C_Mem_Write(&hi2c1, 0xE0, 4, 1, 0, 0, HAL_MAX_DELAY); //USTAW ADRES
-		HAL_Delay(5);
-	  	u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c, u8g_com_hw_i2c_fn); //here we init our u8glib driver
-		u8g_small.font = u8g_font_fub30r;
-
-	  HAL_Delay(100);
+	u8g_InitComFn(&u8g_small, &u8g_dev_ssd1306_128x32_2x_i2c,
+			u8g_com_hw_i2c_fn); //here we init our u8glib driver
+	u8g_small.font = u8g_font_fub30r;
+	HAL_Delay(100);
 }
 
-void display_logo(void)
-{
+void display_logo(void) {
 	u8g_FirstPage(&u8g_big);
-	do
-	{
-	u8g_DrawBitmap(&u8g_big, 0, 0, 16, 64, psd_logo_big);
-	} while ( u8g_NextPage(&u8g_big) );
+	do {
+		u8g_DrawBitmap(&u8g_big, 0, 0, 16, 64, psd_logo_big);
+	} while (u8g_NextPage(&u8g_big));
 
 }
 

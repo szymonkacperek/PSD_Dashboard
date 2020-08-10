@@ -10,117 +10,86 @@ static void lcd_write(uint8_t data, uint8_t len);
 
 /************************************** Function definitions **************************************/
 
-/**
- * Create new Lcd_HandleTypeDef and initialize the Lcd
- */
-/**
- * Initialize 16x2-lcd without cursor
- */
-void Lcd_init()
-{
-	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET); // Podciagniecie RST
-	 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_RESET); // Podciagniecie DC do zera
 
-
+// Inicjalizacja LCD 16x2 bez kursora. Tutaj zachodzi komunikacja po SPI.
+void Lcd_init() {
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET); // Podciagniecie RST
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET); // Podciagniecie DC do zera
 
 	//lcd_write_command(FUNCTION_SET | OPT_DL | OPT_N);
-
 
 	//lcd_write_command(CLEAR_DISPLAY);						// Clear screen
 	//lcd_write_command(DISPLAY_ON_OFF_CONTROL | OPT_D);		// Lcd-on, cursor-off, no-blink
 	//lcd_write_command(ENTRY_MODE_SET | OPT_INC);			// Increment cursor
 
-		lcd_write_command(0x80);
-		lcd_write_command(0x2A);  /* **** Set "RE"=1  00101010B */
-		lcd_write_command(0x71);
-		lcd_write_command(0xC0);
-		lcd_write_command(0x00);
-		lcd_write_command(0x28);
+	lcd_write_command(0x80);
+	lcd_write_command(0x2A); /* **** Set "RE"=1  00101010B */
+	lcd_write_command(0x71);
+	lcd_write_command(0xC0);
+	lcd_write_command(0x00);
+	lcd_write_command(0x28);
 
-		lcd_write_command(0x08); /* **** Set Sleep Mode On     */
-		lcd_write_command(0x2A); /* **** Set "RE"=1  00101010B */
-		lcd_write_command(0x79); /* **** Set "SD"=1  01111001B */
+	lcd_write_command(0x08); /* **** Set Sleep Mode On     */
+	lcd_write_command(0x2A); /* **** Set "RE"=1  00101010B */
+	lcd_write_command(0x79); /* **** Set "SD"=1  01111001B */
 
-		lcd_write_command(0xD5);
-		lcd_write_command(0x70);
-		lcd_write_command(0x78); /* **** Set "SD"=0            */
+	lcd_write_command(0xD5);
+	lcd_write_command(0x70);
+	lcd_write_command(0x78); /* **** Set "SD"=0            */
 
-		//lcd_write_command(0x08);
-		/* **** Set 5-dot, 3 or 4 line(0x09), 1 or 2 line(0x08) */
-		lcd_write_command(0x08);
+	//lcd_write_command(0x08);
+	/* **** Set 5-dot, 3 or 4 line(0x09), 1 or 2 line(0x08) */
+	lcd_write_command(0x08);
 
+	lcd_write_command(0x06); /* **** Set Com31-->Com0  Seg0-->Seg99 */
+	lcd_write_command(0x72);
+	lcd_write_command(0xC0);
+	lcd_write_command(0x01);
 
-		lcd_write_command(0x06); /* **** Set Com31-->Com0  Seg0-->Seg99 */
-		lcd_write_command(0x72);
-		lcd_write_command(0xC0);
-		lcd_write_command(0x01);
+	/**** Set OLED Characterization ***/
+	lcd_write_command(0x2A); /* **** Set "RE"=1  */
+	lcd_write_command(0x79); /* **** Set "SD"=1 */
 
-		/**** Set OLED Characterization ***/
-		lcd_write_command(0x2A);   /* **** Set "RE"=1  */
-		lcd_write_command(0x79);   /* **** Set "SD"=1 */
-
-		/**** CGROM/CGRAM Management ***/
-	#if 0
+	/**** CGROM/CGRAM Management ***/
+#if 0
 		lcd_write_command(0x72); /* **** Set ROM */
 		lcd_write_command(0x00); /*  **** Set ROM A and 8 CGRAM */
 	#endif
 
-		lcd_write_command(0xDC);    /* **** Set ROM */
-		lcd_write_command(0x00);    /* **** Set ROM A and 8 CGRAM */
+	lcd_write_command(0xDC); /* **** Set ROM */
+	lcd_write_command(0x00); /* **** Set ROM A and 8 CGRAM */
 
-		lcd_write_command(0xDA);    /* **** Set Seg Pins HW Config */
-		lcd_write_command(0x10);
+	lcd_write_command(0xDA); /* **** Set Seg Pins HW Config */
+	lcd_write_command(0x10);
 
-		lcd_write_command(0x81);    /* **** Set Contrast */
-		lcd_write_command(0xD9);
-		lcd_write_command(0x8F);    /* **** Set Contrast */
+	lcd_write_command(0x81); /* **** Set Contrast */
+	lcd_write_command(0xD9);
+	lcd_write_command(0x8F); /* **** Set Contrast */
 
-		lcd_write_command(0xF1);
+	lcd_write_command(0xF1);
 
-		lcd_write_command(0xDB);   /* **** Set VCOM deselect level */
-		lcd_write_command(0x30);   /* **** VCC x 0.83              */
+	lcd_write_command(0xDB); /* **** Set VCOM deselect level */
+	lcd_write_command(0x30); /* **** VCC x 0.83              */
 
-		lcd_write_command(0xDC);   /* *Set gpio -turn EN for 15V generator on. */
-		lcd_write_command(0x03);
+	lcd_write_command(0xDC); /* *Set gpio -turn EN for 15V generator on. */
+	lcd_write_command(0x03);
 
-		lcd_write_command(0x78);   /* **** Exiting Set OLED Characterization */
-		lcd_write_command(0x28);
+	lcd_write_command(0x78); /* **** Exiting Set OLED Characterization */
+	lcd_write_command(0x28);
 
-		//flip display with these two lines, comment out the 0x06 write below
-		//lcd_write_command(0x2A);
-		//lcd_write_command(0x05);   /* **** Set Entry Mode (invert) */
+	//flip display with these two lines, comment out the 0x06 write below
+	//lcd_write_command(0x2A);
+	//lcd_write_command(0x05);   /* **** Set Entry Mode (invert) */
 
-		lcd_write_command(0x06);     /* **** Set Entry Mode */
+	lcd_write_command(0x06); /* **** Set Entry Mode */
 
-		lcd_write_command(0x28);     /* **** Set "IS"=0 , "RE" =0 /28 */
-		lcd_write_command(0x01);
-		lcd_write_command(0x80);     /* Set DDRAM Address to 0x80 (line 1 start)*/
+	lcd_write_command(0x28); /* **** Set "IS"=0 , "RE" =0 /28 */
+	lcd_write_command(0x01);
+	lcd_write_command(0x80); /* Set DDRAM Address to 0x80 (line 1 start)*/
 
-		//HAL_Delay(100);
+	//HAL_Delay(100);
 
-		lcd_write_command(0x0C);   /* **** Turn on Display */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	lcd_write_command(0x0C); /* **** Turn on Display */
 
 }
 

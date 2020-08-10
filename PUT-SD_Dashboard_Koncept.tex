@@ -90,6 +90,8 @@ LEDami odpowiadającymi za wizualizację prędkości zajmuje się procesor F030.
 
 Interfejs I2C użyty jest w mniejszych OLED (Display I), które są multipleksowane i sygnał jest później rozdzielany.
 
+\subsection{Inicjalizacja}
+Rzekomo koniecznym jest uwzględnienie bibliotek \texttt{u8glib} w środowiskach typu Eclipse, ponieważ nie są one domyślnie uwzględniane w projekcie nawet, jeśli wrzucisz je do folderu \texttt{./Drivers}. W tym celu robisz prawym klik na projekt - \texttt{Properties - C/C++ General - Paths and Symbols - Includes - Add} oraz wpisujesz w pole ścieżkę (w tym przypadku \texttt{Drivers/u8glib/inc}). Opis pasuje do programu STM32CubeIDE 1.4. 
 
 
 

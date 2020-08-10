@@ -114,15 +114,13 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+
   /* USER CODE BEGIN 2 */
 
-  gui_init();
+	gui_init();
+//	gui_screen_intro(); //test
 
- gui_screen_intro(); //test
-  //HAL_Delay(100);
-
-
-
+	gui_test();
 
   /* USER CODE END 2 */
 
@@ -130,14 +128,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //HAL_Delay(500);
-	 gui_screen_main();
 
-
+	  gui_screen_main();
 
   }
   /* USER CODE END 3 */

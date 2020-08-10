@@ -36,6 +36,7 @@ void gui_display_statement(uint8_t number);
 
 void gui_screen_main();
 void gui_screen_intro();
+void gui_test();
 
 uint8_t dbg_blink = 0;
 
