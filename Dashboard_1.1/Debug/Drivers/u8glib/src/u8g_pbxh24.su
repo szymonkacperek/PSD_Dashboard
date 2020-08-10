@@ -1,0 +1,7 @@
+u8g_pbxh24.c:109:13:u8g_pbxh24_set_tpixel	16	static
+u8g_pbxh24.c:61:6:u8g_pbxh24_Clear	4	static
+u8g_pbxh24.c:78:6:u8g_pbxh24_Init	8	static
+u8g_pbxh24.c:174:6:u8g_pbxh24_SetTPixel	32	static
+u8g_pbxh24.c:186:6:u8g_pbxh24_Set8Pixel	24	static
+u8g_pbxh24.c:210:6:u8g_pbxh24_Set4TPixel	24	static
+u8g_pbxh24.c:234:9:u8g_dev_pbxh24_base_fn	16	static
