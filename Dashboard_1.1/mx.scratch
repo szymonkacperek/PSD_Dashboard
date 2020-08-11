@@ -3,7 +3,7 @@
   <FileVersion>3.0</FileVersion>
   <Workspace>
     <WorkspaceType>Single-project</WorkspaceType>
-    <WorkspacePath>/home/szymon/Documents/Workspace/PUT-SD_Dashboard/Dashboard_1.1/</WorkspacePath>
+    <WorkspacePath>/home/szymon/Documents/Workspace/PUT-SD_Dashboard/PUT-SD_Dashboard/Dashboard_1.1/</WorkspacePath>
     <underRoot>true</underRoot>
     <TrustZone>0</TrustZone>
     <HAL_Driver>/home/szymon/STM32Cube/Repository//STM32Cube_FW_F1_V1.8.0</HAL_Driver>
@@ -25,12 +25,12 @@
           <sourceStructure>Basic</sourceStructure>
           <device>STM32F103RETx</device>
           <cpucore>Arm Cortex-M3</cpucore>
-          <fpu>none</fpu>
+          <fpu>None</fpu>
           <memories>
             <memory access="xrw" name="RAM" size="64" start="0x20000000"/>
             <memory access="rx" name="FLASH" size="512" start="0x8000000"/>
           </memories>
-          <startup>/home/szymon/STM32Cube/Repository//STM32Cube_FW_F1_V1.8.0/Drivers/CMSIS/Device\ST\STM32F1xx\Source\Templates\gcc\startup_stm32f103xe.s</startup>
+          <startup>/home/szymon/STM32Cube/Repository/STM32Cube_FW_F1_V1.8.0/Drivers/CMSIS/Device\ST\STM32F1xx\Source\Templates\gcc\startup_stm32f103xe.s</startup>
           <LinkSettings>
             <LinkAdditionalLibs/>
           </LinkSettings>

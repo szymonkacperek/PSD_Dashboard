@@ -9,10 +9,11 @@
 #include "stm32f1xx_hal.h"
 #include <math.h>
 
-void ws_senddata(void)
-{
-	char uart_buffer[9] = {ws_spd,ws_spd_lim,ws_bat,ws_powr,ws_powr_mod,ws_leds1,ws_leds2,ws_led_bright,ws_mod};
-	HAL_UART_Transmit(&huart1, (uint8_t*)uart_buffer,9, 100);
+void ws_senddata(void) {
+//	char uart_buffer[9] = {ws_spd,ws_spd_lim,ws_bat,ws_powr,ws_powr_mod,ws_leds1,ws_leds2,ws_led_bright,ws_mod};
+	char uart_buffer[9] = { ws_spd, ws_spd_lim, ws_bat, ws_powr, ws_powr_mod,
+			ws_leds1, ws_leds2, ws_led_bright, ws_mod };
+	HAL_UART_Transmit(&huart3, (uint8_t*) uart_buffer, 9, 100);
 }
 
 void ws_set_leds(uint8_t byte1,uint8_t byte2)
