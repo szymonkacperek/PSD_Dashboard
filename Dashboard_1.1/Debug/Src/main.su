@@ -18,7 +18,7 @@ pwm.c:11:6:set_backlight	0	static
 pwm.c:19:6:pwm_init	8	static
 gui.c:29:6:gui_init	8	static
 gui.c:39:6:gui_set_brightness	0	static
-gui.c:190:6:gui_screen_intro	16	static
+gui.c:190:6:gui_screen_intro	16	static,ignoring_inline_asm
 gui.c:222:6:gui_display_statement	8	static,ignoring_inline_asm
 gui.c:49:6:gui_screen_main	32	static,ignoring_inline_asm
 gui.c:319:6:gui_test	16	static

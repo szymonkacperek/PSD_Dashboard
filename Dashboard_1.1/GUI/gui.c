@@ -27,8 +27,8 @@
 // Wedlug danych wysylanych po UART w funkcjach ws_* wszystkie ledy od predkosci
 // i backlightu powinny byc wylaczone.
 void gui_init() {
-//	displays_init();
-//	Lcd_init();
+	displays_init();
+	Lcd_init();
 	pwm_init();
 	ws_set_brightness(gui_brightness);
 	ws_senddata();
@@ -188,19 +188,19 @@ void gui_screen_main() {
 }
 
 void gui_screen_intro() {
-//	display_logo();
-//	display_power_disable();
-//	display_battery_disable();
-//	display_gear_disable();
+	display_logo();
+	display_power_disable();
+	display_battery_disable();
+	display_gear_disable();
 
 	ws_set_leds(0xFF, 0xFF);
 	ws_senddata();
 
-//	Lcd_clr();
-//	asm("nop");
-//	Lcd_string("   PUT Solar");
-//	Lcd_cursor(1, 0);
-//	Lcd_string("    Dynamics");
+	Lcd_clr();
+	asm("nop");
+	Lcd_string("   PUT Solar");
+	Lcd_cursor(1, 0);
+	Lcd_string("    Dynamics");
 
 	HAL_Delay(200);
 
